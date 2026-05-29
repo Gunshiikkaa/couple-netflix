@@ -113,8 +113,8 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   gap: 2.5rem;
   justify-content: center;
-  flex-wrap: wrap;
-  max-width: 90%;
+  flex-wrap: nowrap;
+  max-width: 95%;
   margin-bottom: 4rem;
 }
 

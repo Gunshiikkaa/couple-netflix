@@ -5,8 +5,8 @@ export default function IntroScreen({ onProfileSelect }) {
 
   const profiles = [
     {
-      name: 'Sachin',
-      letter: 'S',
+      name: 'Vatsal',
+      letter: 'V',
       gradient: 'linear-gradient(135deg, #1e40af, #3b82f6)', // Blue/indigo gradient
       badgeText: '👔 HE',
       badgeColor: '#1d4ed8',
@@ -15,8 +15,8 @@ export default function IntroScreen({ onProfileSelect }) {
       emoji: '👔'
     },
     {
-      name: 'Gunshika',
-      letter: 'G',
+      name: 'Muskan',
+      letter: 'M',
       gradient: 'linear-gradient(135deg, #be185d, #ec4899)', // Red/pink gradient
       badgeText: '👑 SHE',
       badgeColor: '#db2777',

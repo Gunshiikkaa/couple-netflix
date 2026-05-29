@@ -163,7 +163,7 @@ export default function SecretLetter() {
           
           <div className="love-letter-paper">
             <div className="love-letter-content">
-              <h3 className="love-letter-heading">Dearest Gunshika,</h3>
+              <h3 className="love-letter-heading">Dearest Muskan,</h3>
               <p style={{ textIndent: '2rem', marginBottom: '1.5rem' }}>
                 Every single day spent with you has felt like an incredible episode of my absolute favorite series. We have shared so many seasons already—from the nervous smiles and initial coffee dates of our pilot episode, to the road trips, late-night chats, culinary achievements (and disasters!), and moving into our cozy shared space.
               </p>
@@ -175,7 +175,7 @@ export default function SecretLetter() {
               </p>
               <div className="love-letter-footer">
                 <p>Always and forever yours,</p>
-                <p style={{ color: 'var(--netflix-red-hover)', fontSize: '2.4rem', marginTop: '0.5rem' }}>Sachin ❤️</p>
+                <p style={{ color: 'var(--netflix-red-hover)', fontSize: '2.4rem', marginTop: '0.5rem' }}>Vatsal ❤️</p>
               </div>
             </div>
           </div>
