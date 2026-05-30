@@ -1294,3 +1294,174 @@ h1, h2, h3, h4, h5, h6 {
     border-color: transparent #222 transparent transparent;
   }
 }
+
+/* Spotlight Section Styles */
+.spotlight-section {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 3.5rem;
+  margin: 3.5rem 0;
+  background-color: #0c0c0c;
+  border: 1px solid #1a1a1a;
+  border-radius: 8px;
+  padding: 2.5rem;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+}
+
+.spotlight-image-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(229, 9, 20, 0.15);
+  border: 1px solid #222;
+  aspect-ratio: 16/10;
+}
+
+.spotlight-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.spotlight-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background-color: var(--netflix-red);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 900;
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  z-index: 10;
+}
+
+.spotlight-badge-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #fff;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.6; }
+}
+
+.spotlight-edit-btn {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  background-color: rgba(0, 0, 0, 0.75);
+  border: 1px solid #444;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  z-index: 10;
+  backdrop-filter: blur(4px);
+}
+
+.spotlight-edit-btn:hover {
+  background-color: #fff;
+  color: #000;
+  border-color: #fff;
+}
+
+.spotlight-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.spotlight-category-header {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: #808080;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: uppercase;
+}
+
+.spotlight-title-text {
+  font-family: 'Cinzel', 'Georgia', serif;
+  font-size: 2.6rem;
+  line-height: 1.15;
+  font-weight: 900;
+  color: #fff;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  letter-spacing: 0.02em;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+  text-align: left;
+}
+
+.spotlight-subtitle-text {
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: var(--netflix-red);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.25rem;
+  text-align: left;
+}
+
+.spotlight-description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #cccccc;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.spotlight-quote-box {
+  background-color: #121212;
+  border-left: 4px solid var(--netflix-red);
+  padding: 1rem 1.25rem;
+  border-radius: 0 6px 6px 0;
+  width: 100%;
+  text-align: left;
+  border: 1px solid #1f1f1f;
+  border-left-width: 4px;
+}
+
+.spotlight-quote {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: #a3a3a3;
+  line-height: 1.5;
+}
+
+/* Responsive Spotlight */
+@media (max-width: 1024px) {
+  .spotlight-section {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 1.75rem;
+  }
+  .spotlight-title-text {
+    font-size: 2.2rem;
+  }
+}
+

@@ -20,6 +20,31 @@ export default function App() {
   const [selectedMemory, setSelectedMemory] = useState(null);
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const [likedMemories, setLikedMemories] = useState({});
+  const [isEditingSpotlight, setIsEditingSpotlight] = useState(false);
+  const [spotlightTitle, setSpotlightTitle] = useState(() => 
+    localStorage.getItem('spotlightTitle') || "THE MOMENT\nTHAT CHANGED\nEVERYTHING"
+  );
+  const [spotlightSubtitle, setSpotlightSubtitle] = useState(() => 
+    localStorage.getItem('spotlightSubtitle') || "OUR FOREVER PROMISE"
+  );
+  const [spotlightText, setSpotlightText] = useState(() => 
+    localStorage.getItem('spotlightText') || "It was a quiet Tuesday morning in October. I looked into your eyes for the first time, and in that split second, the weight of the entire universe shifted. I made a silent vow right then and there: to cherish you, support you, and love you more than life itself. Every single moment since that day has been my greatest honor."
+  );
+  const [spotlightQuote, setSpotlightQuote] = useState(() => 
+    localStorage.getItem('spotlightQuote') || "You never know the value of a moment, until it becomes a memory that stays with you forever."
+  );
+  const [spotlightImage, setSpotlightImage] = useState(() => 
+    localStorage.getItem('spotlightImage') || "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=800&q=80"
+  );
+
+  useEffect(() => {
+    localStorage.setItem('spotlightTitle', spotlightTitle);
+    localStorage.setItem('spotlightSubtitle', spotlightSubtitle);
+    localStorage.setItem('spotlightText', spotlightText);
+    localStorage.setItem('spotlightQuote', spotlightQuote);
+    localStorage.setItem('spotlightImage', spotlightImage);
+  }, [spotlightTitle, spotlightSubtitle, spotlightText, spotlightQuote, spotlightImage]);
+
   const [bucketList, setBucketList] = useState([
     { id: 'b1', title: 'Road trip to the coast', done: false },
     { id: 'b2', title: 'Couples cooking masterclass', done: false },
@@ -300,6 +325,47 @@ export default function App() {
                 variant="top4"
               />
 
+              {/* Featured Documentary Spotlight Section */}
+              <div className="spotlight-section">
+                {/* Left Side Image Card */}
+                <div className="spotlight-image-wrapper">
+                  <img src={spotlightImage} className="spotlight-image" alt="Featured spotlight" />
+                  <div className="spotlight-badge">
+                    <span className="spotlight-badge-dot"></span>
+                    FEATURED MEMORY
+                  </div>
+                  <button className="spotlight-edit-btn" onClick={() => setIsEditingSpotlight(true)}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                      <path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4z" />
+                    </svg>
+                    CUSTOMIZE STORY
+                  </button>
+                </div>
+
+                {/* Right Side Content */}
+                <div className="spotlight-content">
+                  <div className="spotlight-category-header">
+                    <span style={{ color: 'var(--netflix-red)' }}>COUPLEFLIX</span> DOCUMENTARY SPOTLIGHT  |  <span>📅 EST. 2023</span>
+                  </div>
+                  <h2 className="spotlight-title-text">
+                    {spotlightTitle.split('\n').map((line, i) => (
+                      <React.Fragment key={i}>
+                        {line}
+                        <br />
+                      </React.Fragment>
+                    ))}
+                  </h2>
+                  <div className="spotlight-subtitle-text">{spotlightSubtitle}</div>
+                  <p className="spotlight-description">"{spotlightText}"</p>
+                  <div className="spotlight-quote-box">
+                    <p className="spotlight-quote">
+                      "{spotlightQuote}"
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               {/* Custom Interactive Row: Our List (Date Night Checklist) */}
               <div style={{ marginTop: '1rem' }}>
                 <h2 className="memory-row-title">My List (Date Night Bucket List)</h2>
@@ -495,6 +561,89 @@ export default function App() {
                     {selectedMemory.matchRate}
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Customize Spotlight Modal */}
+      {isEditingSpotlight && (
+        <div className="modal-overlay" onClick={() => setIsEditingSpotlight(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '500px' }}>
+            <button className="modal-close-btn" onClick={() => setIsEditingSpotlight(false)}>
+              <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+            <div style={{ padding: '2rem' }}>
+              <h2 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', fontFamily: 'var(--font-outfit)', textTransform: 'uppercase', color: '#fff' }}>
+                Customize Featured Story
+              </h2>
+              
+              <div style={{ marginBottom: '1rem' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', color: '#a3a3a3', marginBottom: '0.25rem', textTransform: 'uppercase', fontWeight: 700 }}>Title (Use Line Breaks if needed)</label>
+                <textarea 
+                  rows="3"
+                  value={spotlightTitle} 
+                  onChange={(e) => setSpotlightTitle(e.target.value)} 
+                  style={{ width: '100%', padding: '0.6rem', background: '#222', border: '1px solid #444', color: '#fff', borderRadius: '4px', fontFamily: 'inherit' }}
+                />
+              </div>
+
+              <div style={{ marginBottom: '1rem' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', color: '#a3a3a3', marginBottom: '0.25rem', textTransform: 'uppercase', fontWeight: 700 }}>Red Subtitle</label>
+                <input 
+                  type="text" 
+                  value={spotlightSubtitle} 
+                  onChange={(e) => setSpotlightSubtitle(e.target.value)} 
+                  style={{ width: '100%', padding: '0.6rem', background: '#222', border: '1px solid #444', color: '#fff', borderRadius: '4px' }}
+                />
+              </div>
+
+              <div style={{ marginBottom: '1rem' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', color: '#a3a3a3', marginBottom: '0.25rem', textTransform: 'uppercase', fontWeight: 700 }}>Story Description</label>
+                <textarea 
+                  rows="4"
+                  value={spotlightText} 
+                  onChange={(e) => setSpotlightText(e.target.value)} 
+                  style={{ width: '100%', padding: '0.6rem', background: '#222', border: '1px solid #444', color: '#fff', borderRadius: '4px', resize: 'vertical' }}
+                />
+              </div>
+
+              <div style={{ marginBottom: '1rem' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', color: '#a3a3a3', marginBottom: '0.25rem', textTransform: 'uppercase', fontWeight: 700 }}>Bottom Quote</label>
+                <input 
+                  type="text" 
+                  value={spotlightQuote} 
+                  onChange={(e) => setSpotlightQuote(e.target.value)} 
+                  style={{ width: '100%', padding: '0.6rem', background: '#222', border: '1px solid #444', color: '#fff', borderRadius: '4px' }}
+                />
+              </div>
+
+              <div style={{ marginBottom: '1.5rem' }}>
+                <label style={{ display: 'block', fontSize: '0.8rem', color: '#a3a3a3', marginBottom: '0.25rem', textTransform: 'uppercase', fontWeight: 700 }}>Image URL</label>
+                <input 
+                  type="text" 
+                  value={spotlightImage} 
+                  onChange={(e) => setSpotlightImage(e.target.value)} 
+                  style={{ width: '100%', padding: '0.6rem', background: '#222', border: '1px solid #444', color: '#fff', borderRadius: '4px' }}
+                />
+              </div>
+
+              <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
+                <button 
+                  onClick={() => setIsEditingSpotlight(false)}
+                  style={{ padding: '0.6rem 1.25rem', background: 'transparent', border: '1px solid #555', color: '#fff', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+                >
+                  Cancel
+                </button>
+                <button 
+                  onClick={() => setIsEditingSpotlight(false)}
+                  style={{ padding: '0.6rem 1.25rem', background: 'var(--netflix-red)', border: 'none', color: '#fff', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer' }}
+                >
+                  Save Changes
+                </button>
               </div>
             </div>
           </div>
