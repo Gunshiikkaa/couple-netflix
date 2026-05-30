@@ -8,6 +8,7 @@ import DatePlanner from './components/DatePlanner';
 import MemoryVault from './components/MemoryVault';
 import SecretLetter from './components/SecretLetter';
 import GalleryWall from './components/GalleryWall';
+import CinematicEnding from './components/CinematicEnding';
 import './App.css';
 
 // Audio Context reference variables
@@ -481,6 +482,9 @@ export default function App() {
                 </div>
               </div>
             </div>
+
+            {/* Cinematic Ending Section */}
+            <CinematicEnding memories={trendingNowItems} />
           </>
         )}
 
