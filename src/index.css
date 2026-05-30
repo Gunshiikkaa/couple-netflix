@@ -286,10 +286,11 @@ h1, h2, h3, h4, h5, h6 {
 .hero-banner {
   position: relative;
   height: 85vh;
+  min-height: 700px; /* Prevent overlap on short viewports/laptops */
   width: 100%;
   display: flex;
-  align-items: center;
-  padding: 0 4%;
+  align-items: flex-end; /* Align content to the bottom of the banner */
+  padding: 0 4% 150px; /* Padding at bottom leaves space for row overlap */
   overflow: hidden;
   background-size: cover;
   background-position: center;
@@ -309,7 +310,7 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   z-index: 10;
   max-width: 650px;
-  margin-top: 50px;
+  margin-top: 0; /* Remove top margin when using flex-end alignment */
 }
 
 .hero-badge-row {
@@ -1267,6 +1268,13 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+  .hero-banner {
+    min-height: 520px;
+    padding-bottom: 110px;
+  }
+  .rows-container {
+    margin-top: -80px;
+  }
   .profile-title { font-size: 2.2rem; }
   .hero-title { font-size: 2.8rem; }
   .hero-desc { font-size: 1rem; }

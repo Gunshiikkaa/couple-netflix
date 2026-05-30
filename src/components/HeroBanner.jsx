@@ -83,7 +83,7 @@ export default function HeroBanner({ activeProfile }) {
           backgroundImage: `url('https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=1600&q=80')`
         }}
       >
-        <div className="hero-content" style={{ marginTop: '70px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+        <div className="hero-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
           
           {/* Tribute Series Badge */}
           <div style={{ 
