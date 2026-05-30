@@ -13,7 +13,7 @@ export default function MemoryVault({ onCardClick }) {
       category: 'Trips',
       date: 'May 12, 2024',
       location: 'Mountain Vista Café',
-      img: '/couple_sunset_date.png',
+      img: '/couple_portrait_13.png',
       desc: 'After driving for three hours through winding mountain passes, we stumbled upon this small, wooden cabin café right as the sun began to sink. We sat on the balcony sipping hazelnut lattes, watching the pine trees turn into golden silhouettes.',
       matchRate: '98% Match',
       year: '2024'
@@ -24,7 +24,7 @@ export default function MemoryVault({ onCardClick }) {
       category: 'Dates',
       date: 'Aug 18, 2024',
       location: 'City Amphitheater',
-      img: '/couple_campfire_night.png',
+      img: '/couple_portrait_14.png',
       desc: 'Dancing to our favorite indie band on a warm summer evening. We did not have front-row seats, but dancing in the grass at the very back with popcorn in hand made it feel like our own private concert.',
       matchRate: '96% Match',
       year: '2024'
@@ -35,7 +35,7 @@ export default function MemoryVault({ onCardClick }) {
       category: 'Silly',
       date: 'Dec 22, 2024',
       location: 'Our Kitchen',
-      img: '/couple_first_date.png',
+      img: '/couple_portrait_15.png',
       desc: 'Our brave attempt to make chocolate chip cookies from scratch without checking if we had baking soda. The result was a giant, flat, crunchy cookie sheet. It tasted terrible, but we laughed for an hour and ended up eating ice cream straight from the tub.',
       matchRate: '100% Comedy',
       year: '2024'
@@ -46,7 +46,7 @@ export default function MemoryVault({ onCardClick }) {
       category: 'Dates',
       date: 'July 5, 2024',
       location: 'Sandy Shores Beach',
-      img: '/couple_beach_picnic.png',
+      img: '/couple_portrait_16.png',
       desc: 'A surprise afternoon setup on the sand. We packed a small cheese board, strawberries, and lemonade. The seagulls tried their best to steal our sandwich, but we defended our lunch and walked along the pier till the moon came up.',
       matchRate: '97% Match',
       year: '2024'
@@ -57,7 +57,7 @@ export default function MemoryVault({ onCardClick }) {
       category: 'Trips',
       date: 'Oct 11, 2025',
       location: 'Coastal Route 1',
-      img: '/couple_road_trip.png',
+      img: '/couple_portrait_17.png',
       desc: 'Going out at midnight just to find a 24-hour diner that served waffles. We took the scenic route, rolled the windows down in the chilly night air, and played our favorite songs on repeat. The waffles were okay, but the drive was legendary.',
       matchRate: '99% Match',
       year: '2025'
@@ -68,7 +68,7 @@ export default function MemoryVault({ onCardClick }) {
       category: 'Silly',
       date: 'April 3, 2025',
       location: 'Downtown Square',
-      img: '/couple_sunset_date.png',
+      img: '/couple_portrait_18.png',
       desc: 'We went out for a nice dinner dressed up, only to get caught in a sudden, torrential downpour with no umbrella. We ended up running through the puddles hand-in-hand, completely soaked. A cozy reminder that every storm is an adventure.',
       matchRate: '95% Match',
       year: '2025'
@@ -79,7 +79,7 @@ export default function MemoryVault({ onCardClick }) {
       category: 'Dates',
       date: 'Oct 24, 2025',
       location: 'The Glasshouse Bistro',
-      img: '/couple_anniversary_dinner.png',
+      img: '/couple_portrait_19.png',
       desc: 'Celebrating two years of incredible memories. We dressed up, shared a chef-special degustation menu, and spent the entire dinner reminiscing about how we met and making plans for the seasons ahead.',
       matchRate: '99.8% Perfect',
       year: '2025'
@@ -90,7 +90,7 @@ export default function MemoryVault({ onCardClick }) {
       category: 'Dates',
       date: 'Nov 4, 2023',
       location: 'Corner Cafe',
-      img: '/couple_first_date.png',
+      img: '/couple_portrait_20.png',
       desc: 'The beginning of our timeline. Two nervous people ordering cappuccinos, talking about their favorite movies, and smiling uncontrollably. That 2-hour conversation felt like 10 minutes, and we both knew we wanted a second date.',
       matchRate: '99% Match',
       year: '2023'

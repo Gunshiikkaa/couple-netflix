@@ -36,11 +36,11 @@ export default function App() {
     localStorage.getItem('spotlightQuote') || "You never know the value of a moment, until it becomes a memory that stays with you forever."
   );
   const [spotlightImage, setSpotlightImage] = useState(() => 
-    localStorage.getItem('spotlightImage') || "/couple_sunset_date.png"
+    localStorage.getItem('spotlightImage_v2') || "/couple_portrait_9.png"
   );
 
   const [galleryCards, setGalleryCards] = useState(() => {
-    const saved = localStorage.getItem('galleryCards');
+    const saved = localStorage.getItem('galleryCards_v2');
     if (saved) {
       try { return JSON.parse(saved); } catch (e) {}
     }
@@ -51,7 +51,7 @@ export default function App() {
         title: "Summer of '24",
         date: "2024",
         desc: "A vintage snapshot of us before life became busy, full of energy and big dreams.",
-        img: "/couple_road_trip.png"
+        img: "/couple_portrait_10.png"
       },
       {
         id: 'g2',
@@ -59,7 +59,7 @@ export default function App() {
         title: "FIRST CHRISTMAS TOGETHER",
         date: "2023",
         desc: "Holding hands in front of the giant pine tree, shielding each other from the winter breeze.",
-        img: "/couple_campfire_night.png"
+        img: "/couple_portrait_11.png"
       },
       {
         id: 'g3',
@@ -67,7 +67,7 @@ export default function App() {
         title: "Fixing the Apartment",
         date: "2025",
         desc: "Paint-stained hands, assembly blueprints, and that wide, proud smile after our first sofa was built.",
-        img: "/couple_first_date.png"
+        img: "/couple_portrait_12.png"
       }
     ];
   });
@@ -77,11 +77,11 @@ export default function App() {
     localStorage.setItem('spotlightSubtitle', spotlightSubtitle);
     localStorage.setItem('spotlightText', spotlightText);
     localStorage.setItem('spotlightQuote', spotlightQuote);
-    localStorage.setItem('spotlightImage', spotlightImage);
+    localStorage.setItem('spotlightImage_v2', spotlightImage);
   }, [spotlightTitle, spotlightSubtitle, spotlightText, spotlightQuote, spotlightImage]);
 
   useEffect(() => {
-    localStorage.setItem('galleryCards', JSON.stringify(galleryCards));
+    localStorage.setItem('galleryCards_v2', JSON.stringify(galleryCards));
   }, [galleryCards]);
 
   const handleAddGalleryCard = (newCard) => {
@@ -241,7 +241,7 @@ export default function App() {
     {
       id: 'c1',
       title: 'LEARNING TO RIDE',
-      img: '/couple_road_trip.png',
+      img: '/couple_portrait_1.png',
       desc: 'Holding onto the seat, running behind me, and letting go. That was the day I learned to fly.',
       matchRate: '99% Match',
       year: '2023',
@@ -252,7 +252,7 @@ export default function App() {
     {
       id: 'c2',
       title: 'CAMPFIRE CHRONICLES',
-      img: '/couple_campfire_night.png',
+      img: '/couple_portrait_2.png',
       desc: 'Under a canopy of stars, listening to you spin tales of old adventures by the cracking fire.',
       matchRate: '98% Match',
       year: '2024',
@@ -263,7 +263,7 @@ export default function App() {
     {
       id: 'c3',
       title: 'CATCHING THE FIRST FISH',
-      img: '/couple_beach_picnic.png',
+      img: '/couple_portrait_3.png',
       desc: 'Patiently showing me how to cast. The look of pure pride on your face was bigger than the catch.',
       matchRate: '97% Match',
       year: '2024',
@@ -274,7 +274,7 @@ export default function App() {
     {
       id: 'c4',
       title: 'THE ART OF HONESTY',
-      img: '/couple_first_date.png',
+      img: '/couple_portrait_4.png',
       desc: 'When you showed me that doing the right thing, even when no one is looking, defines your true character.',
       matchRate: '99.5% Match',
       year: '2025',
@@ -288,7 +288,7 @@ export default function App() {
     {
       id: 't1',
       title: 'The Sunset Café Visit',
-      img: '/couple_sunset_date.png',
+      img: '/couple_portrait_5.png',
       desc: 'Finding a quiet wooden cabin café in the mountain woods and watching the pine silhouettes in the sunset glow.',
       matchRate: '98% Match',
       year: '2024',
@@ -299,7 +299,7 @@ export default function App() {
     {
       id: 't2',
       title: 'Concert Under the Stars',
-      img: '/couple_campfire_night.png',
+      img: '/couple_portrait_6.png',
       desc: 'Dancing to our favorite indie band on the lawn back-row with bags of popcorn and starry skies.',
       matchRate: '96% Match',
       year: '2024',
@@ -310,7 +310,7 @@ export default function App() {
     {
       id: 't3',
       title: 'Beachside Afternoon Picnic',
-      img: '/couple_beach_picnic.png',
+      img: '/couple_portrait_7.png',
       desc: 'Surprise cheese board and lemonade on the warm sand, defending our sandwiches from ambitious seagulls.',
       matchRate: '97% Match',
       year: '2024',
@@ -321,7 +321,7 @@ export default function App() {
     {
       id: 't4',
       title: 'Anniversary Special Gala',
-      img: '/couple_anniversary_dinner.png',
+      img: '/couple_portrait_8.png',
       desc: 'Celebrating our anniversary with fancy formal clothes, gourmet menus, and making plans for seasons to come.',
       matchRate: '99.8% Perfect',
       year: '2025',

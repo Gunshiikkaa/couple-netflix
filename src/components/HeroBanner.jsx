@@ -28,7 +28,7 @@ export default function HeroBanner({ activeProfile }) {
       id: "slide-main",
       title: "The Greatest Story Ever Told: US",
       desc: "An emotional, biographical documentary celebrating the shared adventures, late-night talks, and inside jokes of the ultimate dream team. Now streaming in each other's hearts forever.",
-      img: "/couple_sunset_date.png",
+      img: "/couple_cafe_selfie.png",
       date: "Forever & Always",
       subtitle: "👔 FEATURED DOCUMENTARY",
       matchRate: "99% Match",
@@ -36,81 +36,46 @@ export default function HeroBanner({ activeProfile }) {
       seasons: "2 Seasons",
       tags: "Romantic • Feel-Good • Slice of Life",
       isVideo: true,
-      objectPosition: "center 15%"
-    },
-    {
-      id: "slide-spark",
-      title: "The First Spark",
-      desc: "Where it all began. A simple conversation that turned into late-night calls and nervous excitement.",
-      img: "/couple_first_date.png",
-      date: "October 2023",
-      subtitle: "✨ THE PREMIERE",
-      matchRate: "98% Match",
-      year: "2023",
-      seasons: "Pilot Episode",
-      tags: "Heartfelt • Inspiring • Original",
       objectPosition: "center 50%"
     },
     {
-      id: "slide-first-date",
+      id: "slide-cafe",
       title: "First Date Magic",
-      desc: "Nervous laughter, sharing a dessert we couldn't finish, and realizing this was something special.",
-      img: "/couple_sunset_date.png",
+      desc: "Nervous laughter, sharing a dessert we couldn't finish, and realizing this was something special in a cozy café.",
+      img: "/couple_cafe_selfie.png",
       date: "November 2023",
       subtitle: "☕ ROMANCE SPECIAL",
       matchRate: "99% Match",
       year: "2023",
       seasons: "Episode 2",
       tags: "Sweet • Cozy • Romantic",
-      objectPosition: "center 15%"
+      objectPosition: "center 50%"
     },
     {
-      id: "slide-road-trip",
-      title: "Wanderlust Together",
-      desc: "Getting lost in new cities, sharing a single pair of headphones, and making memory lanes across the map.",
-      img: "/couple_road_trip.png",
+      id: "slide-sandcastle",
+      title: "Building Dreams",
+      desc: "Underneath the warm sun, shaping castles in the sand and designing our next adventures together.",
+      img: "/couple_sandcastle.png",
       date: "May 2024",
-      subtitle: "🚗 TRAVEL DOC",
-      matchRate: "97% Match",
+      subtitle: "🏝️ BEACH ESCAPE",
+      matchRate: "98% Match",
       year: "2024",
-      seasons: "Special Edition",
-      tags: "Adventure • Travel • Uplifting"
+      seasons: "Special Episode",
+      tags: "Warm • Creative • Feel-Good",
+      objectPosition: "center 50%"
     },
     {
-      id: "slide-campfire",
-      title: "Campfire Nights",
-      desc: "Finding comfort in the quietest moments, sharing books, and making the perfect blanket fort under a canopy of stars.",
-      img: "/couple_campfire_night.png",
-      date: "December 2024",
-      subtitle: "🔥 Cozy special",
-      matchRate: "96% Match",
-      year: "2024",
-      seasons: "Episode 5",
-      tags: "Warm • Cosy • Emotional"
-    },
-    {
-      id: "slide-beach",
-      title: "Stronger Every Day",
-      desc: "Celebrating wins, cheering through challenges, and realizing that home isn't a place—it's a person.",
-      img: "/couple_beach_picnic.png",
+      id: "slide-beach-lift",
+      title: "Beachside Romance",
+      desc: "Running into the surf, holding each other close, and letting the ocean breeze carry our laughter away.",
+      img: "/couple_beach_lift.png",
       date: "September 2025",
-      subtitle: "🌊 slice of life",
+      subtitle: "🌊 SLICE OF LIFE",
       matchRate: "99.2% Match",
       year: "2025",
       seasons: "Season 2 Finale",
-      tags: "Romantic • Inspiring • Original"
-    },
-    {
-      id: "slide-dinner",
-      title: "The Next Chapter",
-      desc: "Looking forward to thousands of more sunsets, shared pizzas, inside jokes, and adventures together.",
-      img: "/couple_anniversary_dinner.png",
-      date: "Forever & Always",
-      subtitle: "🕯️ ANNIVERSARY GALA",
-      matchRate: "99.8% Perfect",
-      year: "2026",
-      seasons: "Ongoing Series",
-      tags: "Fancy • Anniversary • Special"
+      tags: "Romantic • Inspiring • Original",
+      objectPosition: "center 50%"
     }
   ];
 
@@ -206,7 +171,7 @@ export default function HeroBanner({ activeProfile }) {
                   pointerEvents: 'none'
                 }}
               >
-                <source src="https://assets.mixkit.co/videos/preview/mixkit-holding-hands-and-walking-in-a-field-3428-large.mp4" type="video/mp4" />
+                <source src="/couple_video.mp4" type="video/mp4" />
               </video>
             );
           }
@@ -433,7 +398,7 @@ export default function HeroBanner({ activeProfile }) {
             
             <div className="modal-image-wrapper">
               <img 
-                src="/couple_anniversary_dinner.png" 
+                src="/couple_beach_lift.png" 
                 className="modal-image" 
                 alt="Love Story info cover" 
               />

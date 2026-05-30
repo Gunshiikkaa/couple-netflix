@@ -195,7 +195,7 @@ export default function GalleryWall({ cards, onAddCard }) {
                   <label style={{ display: 'block', fontSize: '0.8rem', color: '#a3a3a3', marginBottom: '0.25rem', textTransform: 'uppercase', fontWeight: 700 }}>Image URL / Path</label>
                   <input 
                     type="text" 
-                    placeholder="e.g. /couple_sunset_date.png or a URL..."
+                    placeholder="e.g. /couple_portrait_1.png or a URL..."
                     value={newImg} 
                     onChange={(e) => setNewImg(e.target.value)} 
                     style={{ width: '100%', padding: '0.6rem', background: '#222', border: '1px solid #444', color: '#fff', borderRadius: '4px' }}
