@@ -21,6 +21,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('home');
   const [selectedMemory, setSelectedMemory] = useState(null);
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+  const [isPlayingVideo, setIsPlayingVideo] = useState(false);
   const [likedMemories, setLikedMemories] = useState({});
   const [isEditingSpotlight, setIsEditingSpotlight] = useState(false);
   const [spotlightTitle, setSpotlightTitle] = useState(() => 
@@ -79,6 +80,10 @@ export default function App() {
     localStorage.setItem('spotlightQuote', spotlightQuote);
     localStorage.setItem('spotlightImage_v2', spotlightImage);
   }, [spotlightTitle, spotlightSubtitle, spotlightText, spotlightQuote, spotlightImage]);
+
+  useEffect(() => {
+    setIsPlayingVideo(false);
+  }, [selectedMemory]);
 
   useEffect(() => {
     localStorage.setItem('galleryCards_v2', JSON.stringify(galleryCards));
@@ -505,27 +510,95 @@ export default function App() {
             </button>
             
             <div className="modal-image-wrapper">
-              <img 
-                src={selectedMemory.img} 
-                className="modal-image" 
-                alt={selectedMemory.title} 
-              />
-              <div className="modal-gradient"></div>
-              <div style={{
-                position: 'absolute',
-                bottom: '1.5rem',
-                left: '2rem',
-                zIndex: 10
-              }}>
-                <h2 style={{ fontSize: '2rem', textTransform: 'uppercase', marginBottom: '0.25rem', textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
-                  {selectedMemory.title}
-                </h2>
-                <div style={{ display: 'flex', gap: '10px', fontSize: '0.85rem', color: '#ccc', textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
-                  <span>{selectedMemory.date}</span>
-                  <span>•</span>
-                  <span>{selectedMemory.location}</span>
+              {isPlayingVideo ? (
+                <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+                  <video 
+                    src="/make_video_of_this.mp4" 
+                    autoPlay 
+                    controls 
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                  <button 
+                    onClick={() => setIsPlayingVideo(false)}
+                    style={{
+                      position: 'absolute',
+                      top: '1rem',
+                      right: '1rem',
+                      backgroundColor: 'rgba(0,0,0,0.7)',
+                      color: '#fff',
+                      border: '1px solid rgba(255,255,255,0.3)',
+                      borderRadius: '50%',
+                      width: '32px',
+                      height: '32px',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '0.8rem',
+                      zIndex: 20
+                    }}
+                    title="Close Video"
+                  >
+                    ✕
+                  </button>
                 </div>
-              </div>
+              ) : (
+                <>
+                  <img 
+                    src={selectedMemory.img} 
+                    className="modal-image" 
+                    alt={selectedMemory.title} 
+                  />
+                  <div className="modal-gradient"></div>
+                  <div style={{
+                    position: 'absolute',
+                    bottom: '1.5rem',
+                    left: '2rem',
+                    right: '2rem',
+                    zIndex: 10,
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-end'
+                  }}>
+                    <div>
+                      <h2 style={{ fontSize: '2.2rem', textTransform: 'uppercase', marginBottom: '0.25rem', textShadow: '2px 2px 4px rgba(0,0,0,0.8)', fontFamily: "'Cinzel', 'Georgia', serif" }}>
+                        {selectedMemory.title}
+                      </h2>
+                      <div style={{ display: 'flex', gap: '10px', fontSize: '0.85rem', color: '#ccc', textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
+                        <span>{selectedMemory.date}</span>
+                        <span>•</span>
+                        <span>{selectedMemory.location}</span>
+                      </div>
+                    </div>
+                    
+                    <button 
+                      onClick={() => setIsPlayingVideo(true)}
+                      style={{
+                        backgroundColor: '#fff',
+                        color: '#000',
+                        border: 'none',
+                        borderRadius: '4px',
+                        padding: '0.6rem 1.5rem',
+                        fontWeight: 'bold',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        boxShadow: '0 4px 10px rgba(0,0,0,0.5)',
+                        transition: 'all 0.2s ease',
+                        fontSize: '0.95rem'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e6e6e6'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#fff'}
+                    >
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                      Play Video
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
 
             <div className="modal-body" style={{ padding: '1.5rem 2rem' }}>
