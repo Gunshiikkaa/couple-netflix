@@ -21,37 +21,37 @@ export default function HeroBanner({ activeProfile }) {
     {
       title: "The First Spark",
       desc: "Where it all began. A simple conversation that turned into late-night calls and nervous excitement.",
-      img: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=80",
+      img: "/couple_first_date.png",
       date: "October 2023"
     },
     {
       title: "First Date Magic",
       desc: "Nervous laughter, sharing a dessert we couldn't finish, and realizing this was something special.",
-      img: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=80",
+      img: "/couple_sunset_date.png",
       date: "November 2023"
     },
     {
       title: "Wanderlust Together",
       desc: "Getting lost in new cities, sharing a single pair of headphones, and making memory lanes across the map.",
-      img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80",
+      img: "/couple_road_trip.png",
       date: "May 2024"
     },
     {
       title: "Cozy Coffee & Rainy Afternoons",
       desc: "Finding comfort in the quietest moments, sharing books, and making the perfect blanket fort.",
-      img: "https://images.unsplash.com/photo-1543807535-eceef0bc6599?auto=format&fit=crop&w=1200&q=80",
+      img: "/couple_campfire_night.png",
       date: "December 2024"
     },
     {
       title: "Stronger Every Day",
       desc: "Celebrating wins, cheering through challenges, and realizing that home isn't a place—it's a person.",
-      img: "https://images.unsplash.com/photo-1531747118685-ca8fa6e08806?auto=format&fit=crop&w=1200&q=80",
+      img: "/couple_beach_picnic.png",
       date: "September 2025"
     },
     {
       title: "The Next Chapter",
       desc: "Looking forward to thousands of more sunsets, shared pizzas, inside jokes, and adventures together.",
-      img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=1200&q=80",
+      img: "/couple_anniversary_dinner.png",
       date: "Forever & Always"
     }
   ];
@@ -84,7 +84,7 @@ export default function HeroBanner({ activeProfile }) {
           loop 
           muted 
           playsInline 
-          poster="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=1600&q=80"
+          poster="/couple_sunset_date.png"
           style={{
             position: 'absolute',
             inset: 0,
@@ -226,7 +226,7 @@ export default function HeroBanner({ activeProfile }) {
             
             <div className="modal-image-wrapper">
               <img 
-                src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=1200&q=80" 
+                src="/couple_anniversary_dinner.png" 
                 className="modal-image" 
                 alt="Love Story info cover" 
               />

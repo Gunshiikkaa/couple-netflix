@@ -36,7 +36,7 @@ export default function App() {
     localStorage.getItem('spotlightQuote') || "You never know the value of a moment, until it becomes a memory that stays with you forever."
   );
   const [spotlightImage, setSpotlightImage] = useState(() => 
-    localStorage.getItem('spotlightImage') || "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=800&q=80"
+    localStorage.getItem('spotlightImage') || "/couple_sunset_date.png"
   );
 
   const [galleryCards, setGalleryCards] = useState(() => {
@@ -51,7 +51,7 @@ export default function App() {
         title: "Summer of '24",
         date: "2024",
         desc: "A vintage snapshot of us before life became busy, full of energy and big dreams.",
-        img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80"
+        img: "/couple_road_trip.png"
       },
       {
         id: 'g2',
@@ -59,7 +59,7 @@ export default function App() {
         title: "FIRST CHRISTMAS TOGETHER",
         date: "2023",
         desc: "Holding hands in front of the giant pine tree, shielding each other from the winter breeze.",
-        img: "https://images.unsplash.com/photo-1543807535-eceef0bc6599?auto=format&fit=crop&w=600&q=80"
+        img: "/couple_campfire_night.png"
       },
       {
         id: 'g3',
@@ -67,7 +67,7 @@ export default function App() {
         title: "Fixing the Apartment",
         date: "2025",
         desc: "Paint-stained hands, assembly blueprints, and that wide, proud smile after our first sofa was built.",
-        img: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80"
+        img: "/couple_first_date.png"
       }
     ];
   });
@@ -241,7 +241,7 @@ export default function App() {
     {
       id: 'c1',
       title: 'LEARNING TO RIDE',
-      img: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80',
+      img: '/couple_road_trip.png',
       desc: 'Holding onto the seat, running behind me, and letting go. That was the day I learned to fly.',
       matchRate: '99% Match',
       year: '2023',
@@ -252,7 +252,7 @@ export default function App() {
     {
       id: 'c2',
       title: 'CAMPFIRE CHRONICLES',
-      img: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=600&q=80',
+      img: '/couple_campfire_night.png',
       desc: 'Under a canopy of stars, listening to you spin tales of old adventures by the cracking fire.',
       matchRate: '98% Match',
       year: '2024',
@@ -263,7 +263,7 @@ export default function App() {
     {
       id: 'c3',
       title: 'CATCHING THE FIRST FISH',
-      img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80',
+      img: '/couple_beach_picnic.png',
       desc: 'Patiently showing me how to cast. The look of pure pride on your face was bigger than the catch.',
       matchRate: '97% Match',
       year: '2024',
@@ -274,7 +274,7 @@ export default function App() {
     {
       id: 'c4',
       title: 'THE ART OF HONESTY',
-      img: 'https://images.unsplash.com/photo-1533048347193-7b447a18f883?auto=format&fit=crop&w=600&q=80',
+      img: '/couple_first_date.png',
       desc: 'When you showed me that doing the right thing, even when no one is looking, defines your true character.',
       matchRate: '99.5% Match',
       year: '2025',
@@ -288,7 +288,7 @@ export default function App() {
     {
       id: 't1',
       title: 'The Sunset Café Visit',
-      img: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=600&q=80',
+      img: '/couple_sunset_date.png',
       desc: 'Finding a quiet wooden cabin café in the mountain woods and watching the pine silhouettes in the sunset glow.',
       matchRate: '98% Match',
       year: '2024',
@@ -299,7 +299,7 @@ export default function App() {
     {
       id: 't2',
       title: 'Concert Under the Stars',
-      img: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80',
+      img: '/couple_campfire_night.png',
       desc: 'Dancing to our favorite indie band on the lawn back-row with bags of popcorn and starry skies.',
       matchRate: '96% Match',
       year: '2024',
@@ -310,7 +310,7 @@ export default function App() {
     {
       id: 't3',
       title: 'Beachside Afternoon Picnic',
-      img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80',
+      img: '/couple_beach_picnic.png',
       desc: 'Surprise cheese board and lemonade on the warm sand, defending our sandwiches from ambitious seagulls.',
       matchRate: '97% Match',
       year: '2024',
@@ -321,7 +321,7 @@ export default function App() {
     {
       id: 't4',
       title: 'Anniversary Special Gala',
-      img: 'https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=600&q=80',
+      img: '/couple_anniversary_dinner.png',
       desc: 'Celebrating our anniversary with fancy formal clothes, gourmet menus, and making plans for seasons to come.',
       matchRate: '99.8% Perfect',
       year: '2025',
@@ -484,7 +484,7 @@ export default function App() {
             </div>
 
             {/* Cinematic Ending Section */}
-            <CinematicEnding memories={trendingNowItems} />
+            <CinematicEnding memories={[...trendingNowItems, ...continueWatchingItems]} />
           </>
         )}
 

@@ -192,10 +192,10 @@ export default function GalleryWall({ cards, onAddCard }) {
                 </div>
 
                 <div style={{ marginBottom: '1.5rem' }}>
-                  <label style={{ display: 'block', fontSize: '0.8rem', color: '#a3a3a3', marginBottom: '0.25rem', textTransform: 'uppercase', fontWeight: 700 }}>Image URL</label>
+                  <label style={{ display: 'block', fontSize: '0.8rem', color: '#a3a3a3', marginBottom: '0.25rem', textTransform: 'uppercase', fontWeight: 700 }}>Image URL / Path</label>
                   <input 
                     type="text" 
-                    placeholder="Paste an Unsplash image URL..."
+                    placeholder="e.g. /couple_sunset_date.png or a URL..."
                     value={newImg} 
                     onChange={(e) => setNewImg(e.target.value)} 
                     style={{ width: '100%', padding: '0.6rem', background: '#222', border: '1px solid #444', color: '#fff', borderRadius: '4px' }}
