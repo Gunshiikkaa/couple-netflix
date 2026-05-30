@@ -263,38 +263,6 @@ export default function App() {
     }
   ];
 
-  const romanticComediesItems = [
-    {
-      id: 'rc1',
-      title: 'The Cookie Calamity',
-      img: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=600&q=80',
-      desc: 'Our brave attempt to bake cookies from scratch without checking if we had baking soda. Crispy, sweet sheets of carbon!',
-      matchRate: '100% Comedy',
-      year: '2024',
-      location: 'Our Kitchen',
-      date: 'Dec 22, 2024'
-    },
-    {
-      id: 'rc2',
-      title: 'Unexpected Rain Storm',
-      img: 'https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=600&q=80',
-      desc: 'Getting caught in a sudden tropical storm dressed in smart clothes, and splashing through puddles laughing.',
-      matchRate: '95% Match',
-      year: '2025',
-      location: 'Downtown Square',
-      date: 'April 3, 2025'
-    },
-    {
-      id: 'rc3',
-      title: 'The IKEA Maze Odyssey',
-      img: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=600&q=80',
-      desc: 'Spending four hours in IKEA, test-driving sofas, arguing over colors, and getting lost twice, ending with hotdogs.',
-      matchRate: '97% Match',
-      year: '2025',
-      location: 'IKEA Showrooms',
-      date: 'June 10, 2025'
-    }
-  ];
 
   if (!activeProfile) {
     return <IntroScreen onProfileSelect={setActiveProfile} />;
@@ -324,11 +292,6 @@ export default function App() {
                 items={trendingNowItems} 
                 onCardClick={setSelectedMemory} 
                 variant="memories"
-              />
-              <MemoryRow 
-                title="Romantic Comedies" 
-                items={romanticComediesItems} 
-                onCardClick={setSelectedMemory} 
               />
               <MemoryRow 
                 title="Top 4 Hits in Hearts Today" 
