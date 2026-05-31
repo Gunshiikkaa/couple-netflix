@@ -198,11 +198,7 @@ export default function MemoryVault({ onCardClick }) {
 
       {/* Grid Results */}
       {filteredMemories.length > 0 ? (
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-          gap: '1.5rem'
-        }}>
+        <div className="vault-grid">
           {filteredMemories.map((memory) => (
             <div
               key={memory.id}
@@ -251,10 +247,10 @@ export default function MemoryVault({ onCardClick }) {
                 </span>
               </div>
               <div style={{ padding: '0.85rem', height: '25%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                <div style={{ fontWeight: 700, fontSize: '1rem', color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                <div className="vault-card-title">
                   {memory.title}
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-grey)', marginTop: '0.25rem' }}>
+                <div className="vault-card-meta">
                   <span>{memory.date}</span>
                   <span>{memory.matchRate}</span>
                 </div>

@@ -1649,3 +1649,267 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-sans);
 }
 
+/* --- RESPONSIVENESS OVERHAUL --- */
+
+/* Responsive Navbar & Hamburger */
+.nav-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, color 0.2s ease;
+  z-index: 60;
+}
+
+.nav-hamburger:hover {
+  transform: scale(1.1);
+  color: var(--netflix-red);
+}
+
+.mobile-nav-menu {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.95);
+  border-bottom: 1px solid #222;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+  z-index: 49;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  animation: slideDown 0.25s ease-out;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.mobile-nav-link-btn {
+  background: transparent;
+  border: none;
+  color: #e5e5e5;
+  font-size: 1rem;
+  padding: 0.85rem 2rem;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  font-family: var(--font-sans);
+}
+
+.mobile-nav-link-btn:hover, .mobile-nav-link-btn.active {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-left: 3px solid var(--netflix-red);
+  padding-left: calc(2rem - 3px);
+}
+
+/* Memory Vault Grid Layout */
+.vault-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.vault-card-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vault-card-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--text-grey);
+  margin-top: 0.25rem;
+}
+
+/* Tablet screens <= 768px */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none !important;
+  }
+  
+  .nav-hamburger {
+    display: flex;
+  }
+  
+  .hidden-mobile {
+    display: none !important;
+  }
+  
+  /* Scrollable Modal Content on small viewports */
+  .modal-content {
+    max-height: 92vh;
+    overflow-y: auto;
+    width: 95%;
+  }
+
+  .modal-close-btn {
+    z-index: 30;
+  }
+
+  /* Padding adjustments */
+  .rows-container {
+    padding: 0 1.25rem 2rem;
+  }
+
+  /* Prevent polaroids overlap */
+  .polaroid-card {
+    transform: none !important;
+  }
+  
+  /* Disable hover side arrows on touch pointer devices */
+  .row-arrow-btn {
+    display: none !important;
+  }
+}
+
+/* Mobile screens <= 480px */
+@media (max-width: 480px) {
+  /* Scale headings and titles */
+  h2, .memory-row-title, .gallery-title {
+    font-size: 1.8rem !important;
+  }
+  
+  /* Compact Navbar */
+  .navbar {
+    padding: 0 1rem;
+    height: 60px;
+  }
+  
+  .mobile-nav-menu {
+    top: 60px;
+  }
+  
+  .nav-logo {
+    font-size: 1.65rem;
+  }
+
+  /* Compact Hero Banner elements */
+  .hero-banner {
+    min-height: 480px;
+    padding: 0 1.25rem 80px;
+  }
+  
+  .hero-title {
+    font-size: 2rem !important;
+    margin-bottom: 0.85rem !important;
+    line-height: 1.15;
+  }
+  
+  .hero-desc {
+    font-size: 0.9rem !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 1.25rem !important;
+  }
+  
+  .hero-buttons {
+    width: 100%;
+    gap: 0.5rem;
+  }
+  
+  .hero-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.55rem 1rem !important;
+    font-size: 0.9rem !important;
+  }
+  
+  .hero-indicators-container {
+    bottom: 80px;
+    right: 1.25rem;
+  }
+  
+  .hero-right-meta-tag {
+    bottom: 110px;
+  }
+
+  /* 2-Column Mobile Grid for Memory Vault */
+  .vault-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
+    gap: 0.75rem !important;
+  }
+  
+  /* Vault details font scaling */
+  .vault-card-title {
+    font-size: 0.85rem !important;
+  }
+  
+  .vault-card-meta {
+    font-size: 0.65rem !important;
+  }
+
+  /* Keypad and lockbox controls */
+  .lockbox-container {
+    padding: 1.5rem 1rem !important;
+    margin: 1rem auto !important;
+    width: 100% !important;
+  }
+  
+  .keypad-btn {
+    padding: 0.75rem !important;
+    font-size: 1.1rem !important;
+  }
+  
+  /* Cursive love letter pad size adjustments */
+  .love-letter-paper {
+    padding: 1.25rem 1.5rem !important;
+    font-size: 1.3rem !important;
+    line-height: 1.45 !important;
+  }
+  
+  .love-letter-paper::before {
+    background: repeating-linear-gradient(transparent, transparent 27px, #e2e8f0 27px, #e2e8f0 28px) !important;
+  }
+  
+  .love-letter-heading {
+    font-size: 1.5rem !important;
+  }
+  
+  .love-letter-footer {
+    margin-top: 1rem !important;
+  }
+  
+  /* Date Planner adjustments */
+  .date-moods-row {
+    gap: 0.5rem !important;
+  }
+  
+  .mood-btn {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.8rem !important;
+  }
+  
+  .reel-spinner-container {
+    height: 200px !important;
+  }
+  
+  .reel-card-slot {
+    height: 150px !important;
+  }
+  
+  .reel-item {
+    height: 150px !important;
+    padding: 0.5rem !important;
+  }
+  
+  .spin-wheel-btn {
+    padding: 0.75rem 2rem !important;
+    font-size: 1rem !important;
+  }
+}
