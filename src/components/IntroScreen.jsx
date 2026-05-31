@@ -126,101 +126,43 @@ export default function IntroScreen({ onProfileSelect }) {
       <div className="film-grain"></div>
 
       <div style={{ position: 'relative', zIndex: 10, textAlign: 'center' }}>
-        <h1 style={{ 
-          fontFamily: "'Cinzel', 'Georgia', serif", 
-          fontWeight: 600, 
-          fontSize: '3.5rem', 
-          marginBottom: '0.15rem',
-          letterSpacing: '0.02em',
-          color: '#fff'
-        }}>
+        <h1 className="profile-title">
           Who's watching?
         </h1>
         
-        <p style={{
-          color: '#808080',
-          letterSpacing: '0.15em',
-          fontSize: '0.8rem',
-          fontFamily: 'var(--font-outfit)',
-          textTransform: 'uppercase',
-          marginBottom: '2rem'
-        }}>
+        <p className="profile-subtitle">
           Choose a profile to start streaming memories
         </p>
         
-        <div className="profile-list" style={{ gap: '2.5rem' }}>
+        <div className="profile-list">
           {profiles.map((profile) => (
             <div 
               key={profile.name} 
               className="profile-card"
               onClick={() => handleSelect(profile)}
-              style={{ width: '150px' }}
             >
               {/* Profile Card Box */}
               <div 
                 className="profile-avatar-wrapper"
-                style={{ 
-                  background: profile.gradient,
-                  width: '130px',
-                  height: '130px',
-                  borderRadius: '6px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  position: 'relative'
-                }}
+                style={{ background: profile.gradient }}
               >
                 {/* Large Center Character */}
-                <div style={{
-                  fontSize: profile.letter === '❤️' ? '3rem' : '4.5rem',
-                  fontWeight: '900',
-                  color: '#000000',
-                  userSelect: 'none',
-                  fontFamily: 'var(--font-outfit)'
-                }}>
+                <div className={`profile-avatar-letter ${profile.letter === '❤️' ? 'heart' : ''}`}>
                   {profile.letter}
                 </div>
 
                 {/* Bottom Right Pill Badge */}
-                <div style={{
-                  position: 'absolute',
-                  bottom: '8px',
-                  right: '8px',
-                  backgroundColor: 'rgba(0, 0, 0, 0.75)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  borderRadius: '4px',
-                  padding: '2px 6px',
-                  fontSize: '0.65rem',
-                  fontWeight: '800',
-                  color: '#fff',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px',
-                  letterSpacing: '0.05em'
-                }}>
+                <div className="profile-avatar-badge">
                   {profile.badgeText}
                 </div>
               </div>
 
               {/* Profile Text Details underneath */}
-              <span className="profile-name" style={{ 
-                color: '#fff', 
-                fontWeight: '600', 
-                fontSize: '1.1rem',
-                marginTop: '0.5rem',
-                display: 'block'
-              }}>
+              <span className="profile-name">
                 {profile.name}
               </span>
               
-              <span style={{
-                color: '#808080',
-                fontSize: '0.7rem',
-                letterSpacing: '0.05em',
-                fontFamily: 'var(--font-outfit)',
-                marginTop: '0.2rem',
-                display: 'block'
-              }}>
+              <span className="profile-role">
                 {profile.role}
               </span>
             </div>
