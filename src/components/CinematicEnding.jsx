@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-export default function CinematicEnding({ memories }) {
+export default function CinematicEnding({ memories, onPlayThemeSong }) {
   const [confetti, setConfetti] = useState([]);
   const [celebrationActive, setCelebrationActive] = useState(false);
   const sectionRef = useRef(null);
@@ -627,7 +627,7 @@ export default function CinematicEnding({ memories }) {
             </button>
 
             <button
-              onClick={playChime}
+              onClick={onPlayThemeSong || playChime}
               style={{
                 backgroundColor: '#0c0c0c',
                 color: '#ccc',

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import IntroScreen from './components/IntroScreen';
 import Navbar from './components/Navbar';
 import HeroBanner from './components/HeroBanner';
@@ -11,10 +11,130 @@ import GalleryWall from './components/GalleryWall';
 import CinematicEnding from './components/CinematicEnding';
 import './App.css';
 
-// Audio Context reference variables
-let audioCtx = null;
-let musicTimer = null;
-let currentChordIdx = 0;
+// Database of relationship milestone tracks
+const TRACKS = [
+  {
+    id: 's1',
+    title: 'Tum Se Hi',
+    artist: 'Pritam, Mohit Chauhan',
+    album: 'Jab We Met',
+    year: '2007',
+    youtubeId: 'Cb6wuzOurPc',
+    img: '/couple_portrait_1.png',
+    desc: 'Holding onto the seat, running behind me, and letting go. That was the day I learned to fly.',
+    matchRate: '99% Match',
+    tags: 'Sweet • Nostalgic • Romantic',
+    memoryId: 'c1',
+    duration: 323
+  },
+  {
+    id: 's2',
+    title: 'Subhanallah',
+    artist: 'Pritam, Sreerama Chandra',
+    album: 'Yeh Jawaani Hai Deewani',
+    year: '2013',
+    youtubeId: 'QYO6AlxiRE4',
+    img: '/couple_portrait_2.png',
+    desc: 'Under a canopy of stars, listening to you spin tales of old adventures by the cracking fire.',
+    matchRate: '98% Match',
+    tags: 'Warm • Magic • Romantic',
+    memoryId: 'c2',
+    duration: 249
+  },
+  {
+    id: 's3',
+    title: 'Raabta',
+    artist: 'Pritam, Arijit Singh',
+    album: 'Agent Vinod',
+    year: '2012',
+    youtubeId: 'zlt38OOqwDc',
+    img: '/couple_portrait_3.png',
+    desc: 'Patiently showing me how to cast. The look of pure pride on your face was bigger than the catch.',
+    matchRate: '97% Match',
+    tags: 'Calm • Soulful • Tender',
+    memoryId: 'c3',
+    duration: 243
+  },
+  {
+    id: 's4',
+    title: 'Tujh Mein Rab Dikhta Hai',
+    artist: 'Salim-Sulaiman, Roop Kumar Rathod',
+    album: 'Rab Ne Bana Di Jodi',
+    year: '2008',
+    youtubeId: 'qoq8B8ThgEM',
+    img: '/couple_portrait_4.png',
+    desc: 'When you showed me that doing the right thing, even when no one is looking, defines your true character.',
+    matchRate: '99.5% Match',
+    tags: 'Divine • Pure • Romantic',
+    memoryId: 'c4',
+    duration: 282
+  },
+  {
+    id: 's5',
+    title: 'Saibo',
+    artist: 'Sachin-Jigar, Tochi Raina, Shreya Ghoshal',
+    album: 'Shor in the City',
+    year: '2011',
+    youtubeId: '9Bmh6vaQt0s',
+    img: '/couple_portrait_5.png',
+    desc: 'Finding a quiet wooden cabin café in the mountain woods and watching the pine silhouettes in the sunset glow.',
+    matchRate: '98% Match',
+    tags: 'Cozy • Acoustic • Heartfelt',
+    memoryId: 't1',
+    duration: 196
+  },
+  {
+    id: 's6',
+    title: 'Kesariya',
+    artist: 'Pritam, Arijit Singh',
+    album: 'Brahmāstra',
+    year: '2022',
+    youtubeId: 'BddP6PYo2gs',
+    img: '/couple_portrait_6.png',
+    desc: 'Dancing to our favorite indie band on the lawn back-row with bags of popcorn and starry skies.',
+    matchRate: '96% Match',
+    tags: 'Vibrant • Passionate • Anthem',
+    memoryId: 't2',
+    duration: 268
+  },
+  {
+    id: 's7',
+    title: 'Pehla Nasha',
+    artist: 'Jatin-Lalit, Udit Narayan',
+    album: 'Jo Jeeta Wohi Sikandar',
+    year: '1992',
+    youtubeId: 'ODu7OyAqK-Q',
+    img: '/couple_portrait_7.png',
+    desc: 'Surprise cheese board and lemonade on the warm sand, defending our sandwiches from ambitious seagulls.',
+    matchRate: '97% Match',
+    tags: 'Classic • First Love • Dreamy',
+    memoryId: 't3',
+    duration: 291
+  },
+  {
+    id: 's8',
+    title: 'Agar Tum Saath Ho',
+    artist: 'A.R. Rahman, Arijit Singh, Alka Yagnik',
+    album: 'Tamasha',
+    year: '2015',
+    youtubeId: 'sK7riqg2mr4',
+    img: '/couple_portrait_8.png',
+    desc: 'Celebrating our anniversary with fancy formal clothes, gourmet menus, and making plans for seasons to come.',
+    matchRate: '99.8% Perfect',
+    tags: 'Intense • Emotional • Masterpiece',
+    memoryId: 't4',
+    duration: 341
+  }
+];
+
+
+// Helper to format seconds as m:ss
+const formatTime = (secs) => {
+  if (!secs || isNaN(secs)) return '0:00';
+  const m = Math.floor(secs / 60);
+  const s = Math.floor(secs % 60);
+  return `${m}:${s.toString().padStart(2, '0')}`;
+};
 
 export default function App() {
   const [activeProfile, setActiveProfile] = useState(null);
@@ -22,6 +142,20 @@ export default function App() {
   const [selectedMemory, setSelectedMemory] = useState(null);
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const [isPlayingVideo, setIsPlayingVideo] = useState(false);
+
+  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
+
+  // Custom Music Player States & Refs
+  const [currentTrack, setCurrentTrack] = useState(null);
+  const [playerType, setPlayerType] = useState('none'); // 'youtube' | 'local' | 'none'
+  const [youtubeVideoId, setYoutubeVideoId] = useState('');
+  const [audioTime, setAudioTime] = useState(0);
+  const [audioDuration, setAudioDuration] = useState(0);
+  const [audioVolume, setAudioVolume] = useState(0.7);
+
+  const audioRef = useRef(null);
+  const youtubeRef = useRef(null);
+
   const [likedMemories, setLikedMemories] = useState({});
   const [isEditingSpotlight, setIsEditingSpotlight] = useState(false);
   const [spotlightTitle, setSpotlightTitle] = useState(() => 
@@ -100,97 +234,178 @@ export default function App() {
     { id: 'b4', title: 'Write a joint future bucket list', done: false }
   ]);
 
-  // Ambient sound generator using Web Audio API
-  const startAmbientMusic = () => {
-    try {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (!AudioContext) return;
-      if (!audioCtx) {
-        audioCtx = new AudioContext();
-      }
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-
-      // Soothing chord progression in C/F major:
-      // 1. Cmaj7 (C3, E3, G3, B3)
-      // 2. Am7 (A2, C3, E3, G3)
-      // 3. Fmaj7 (F2, A2, C3, E3)
-      // 4. G6 (G2, B2, D3, E3)
-      const chords = [
-        [130.81, 164.81, 196.00, 246.94], // C3, E3, G3, B3
-        [110.00, 130.81, 164.81, 196.00], // A2, C3, E3, G3
-        [87.31, 110.00, 130.81, 164.81],  // F2, A2, C3, E3
-        [98.00, 123.47, 146.83, 164.81]   // G2, B2, D3, E3
-      ];
-
-      const playChord = () => {
-        if (!audioCtx || audioCtx.state !== 'running') return;
-        const now = audioCtx.currentTime;
-        const notes = chords[currentChordIdx];
-        currentChordIdx = (currentChordIdx + 1) % chords.length;
-
-        // Soothing low-pass filter to soften high frequencies
-        const filter = audioCtx.createBiquadFilter();
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(350, now);
-
-        notes.forEach((freq, index) => {
-          const osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
-          
-          osc.type = 'sine'; // Pure warm tone
-          osc.frequency.setValueAtTime(freq, now + index * 0.2); // Slightly arpeggiated entry
-
-          // Sound envelope: slow swell and fade out
-          gain.gain.setValueAtTime(0, now);
-          gain.gain.linearRampToValueAtTime(0.04, now + index * 0.2 + 0.5); // Warm fade-in
-          gain.gain.exponentialRampToValueAtTime(0.0001, now + 4.8); // Long decay
-
-          osc.connect(filter);
-          filter.connect(gain);
-          gain.connect(audioCtx.destination);
-
-          osc.start(now + index * 0.2);
-          osc.stop(now + 5.2);
+  // Tick timer hook for YouTube player background simulation
+  useEffect(() => {
+    let interval = null;
+    if (isPlayingAudio && playerType === 'youtube' && currentTrack) {
+      interval = setInterval(() => {
+        setAudioTime(prevTime => {
+          if (prevTime >= currentTrack.duration) {
+            handleNextTrack();
+            return 0;
+          }
+          return prevTime + 1;
         });
-      };
+      }, 1000);
+    } else {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [isPlayingAudio, playerType, currentTrack]);
 
-      playChord();
-      musicTimer = setInterval(playChord, 5200);
+  const playTrack = (track) => {
+    // Stop local audio
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+    
+    setPlayerType('youtube');
+    setCurrentTrack(track);
+    setAudioTime(0);
+    setAudioDuration(track.duration);
+    setYoutubeVideoId(track.youtubeId);
+    setIsPlayingAudio(true);
+    setIsMusicPlaying(true);
+  };
 
-    } catch (err) {
-      console.warn("Could not play ambient background audio", err);
+  const handleSelectTrack = (track) => {
+    if (currentTrack && currentTrack.id === track.id) {
+      handlePlayPause();
+    } else {
+      playTrack(track);
     }
   };
 
-  const stopAmbientMusic = () => {
-    if (musicTimer) {
-      clearInterval(musicTimer);
-      musicTimer = null;
+  const handlePlayPause = () => {
+    if (isPlayingAudio) {
+      setIsPlayingAudio(false);
+      setIsMusicPlaying(false);
+      if (playerType === 'youtube') {
+        youtubeRef.current?.contentWindow?.postMessage(
+          JSON.stringify({ event: 'command', func: 'pauseVideo' }),
+          '*'
+        );
+      } else if (playerType === 'local') {
+        audioRef.current?.pause();
+      }
+    } else {
+      if (playerType === 'none') {
+        playTrack(TRACKS[0]);
+      } else {
+        setIsPlayingAudio(true);
+        setIsMusicPlaying(true);
+        if (playerType === 'youtube') {
+          youtubeRef.current?.contentWindow?.postMessage(
+            JSON.stringify({ event: 'command', func: 'playVideo' }),
+            '*'
+          );
+        } else if (playerType === 'local') {
+          audioRef.current?.play();
+        }
+      }
     }
-    if (audioCtx && audioCtx.state === 'running') {
-      audioCtx.suspend();
+  };
+
+  const handleStopAudio = () => {
+    setIsPlayingAudio(false);
+    setIsMusicPlaying(false);
+    setPlayerType('none');
+    setCurrentTrack(null);
+    setYoutubeVideoId('');
+    setAudioTime(0);
+    setAudioDuration(0);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.src = '';
+    }
+  };
+
+  const handleNextTrack = () => {
+    if (playerType === 'local') {
+      playTrack(TRACKS[0]);
+      return;
+    }
+    if (!currentTrack) return;
+    const idx = TRACKS.findIndex(t => t.id === currentTrack.id);
+    const nextIdx = (idx + 1) % TRACKS.length;
+    playTrack(TRACKS[nextIdx]);
+  };
+
+  const handlePrevTrack = () => {
+    if (playerType === 'local') {
+      playTrack(TRACKS[TRACKS.length - 1]);
+      return;
+    }
+    if (!currentTrack) return;
+    const idx = TRACKS.findIndex(t => t.id === currentTrack.id);
+    const prevIdx = (idx - 1 + TRACKS.length) % TRACKS.length;
+    playTrack(TRACKS[prevIdx]);
+  };
+
+  const handleVolumeChange = (val) => {
+    setAudioVolume(val);
+    if (audioRef.current) {
+      audioRef.current.volume = val;
+    }
+    if (playerType === 'youtube') {
+      youtubeRef.current?.contentWindow?.postMessage(
+        JSON.stringify({ event: 'command', func: 'setVolume', args: [val * 100] }),
+        '*'
+      );
+    }
+  };
+
+  const handleSeek = (newTime) => {
+    setAudioTime(newTime);
+    if (playerType === 'youtube') {
+      youtubeRef.current?.contentWindow?.postMessage(
+        JSON.stringify({ event: 'command', func: 'seekTo', args: [newTime, true] }),
+        '*'
+      );
+    } else if (playerType === 'local') {
+      if (audioRef.current) {
+        audioRef.current.currentTime = newTime;
+      }
+    }
+  };
+
+  const playThemeSong = () => {
+    if (youtubeRef.current) {
+      youtubeRef.current.contentWindow?.postMessage(
+        JSON.stringify({ event: 'command', func: 'pauseVideo' }),
+        '*'
+      );
+    }
+    
+    setPlayerType('local');
+    setYoutubeVideoId('');
+    setCurrentTrack({
+      id: 'theme',
+      title: 'Our Theme Song',
+      artist: 'Vatsal & Muskan',
+      album: 'Forever',
+      year: '2026',
+      img: '/couple_portrait_9.png',
+      duration: 250
+    });
+    setAudioTime(0);
+    setIsPlayingAudio(true);
+    setIsMusicPlaying(true);
+    
+    if (audioRef.current) {
+      audioRef.current.src = '/theme_song.mp3';
+      audioRef.current.volume = audioVolume;
+      audioRef.current.play()
+        .catch(err => console.warn("Failed to play local theme song:", err));
     }
   };
 
   const handleToggleMusic = () => {
-    if (isMusicPlaying) {
-      stopAmbientMusic();
-      setIsMusicPlaying(false);
-    } else {
-      setIsMusicPlaying(true);
-      // Wait for brief user interaction confirmation block resolution
-      setTimeout(() => {
-        startAmbientMusic();
-      }, 50);
-    }
+    handlePlayPause();
   };
 
-  // Turn off music if profile is unmounted/switched
   const handleSwitchProfile = () => {
-    stopAmbientMusic();
-    setIsMusicPlaying(false);
+    handleStopAudio();
     setActiveProfile(null);
     setActiveTab('home');
   };
@@ -350,6 +565,7 @@ export default function App() {
         onSwitchProfile={handleSwitchProfile}
         isMusicPlaying={isMusicPlaying}
         onToggleMusic={handleToggleMusic}
+        currentTrack={currentTrack}
       />
 
       {/* Main Tab Routing */}
@@ -372,6 +588,98 @@ export default function App() {
                 onCardClick={setSelectedMemory} 
                 variant="top4"
               />
+
+              {/* Soundtracks of Our Love Row */}
+              <div style={{ margin: '2rem 0' }}>
+                <h2 className="memory-row-title" style={{ marginBottom: '0.5rem' }}>SOUNDTRACKS OF OUR LOVE</h2>
+                <span style={{ fontSize: '0.82rem', color: '#808080', display: 'block', marginBottom: '1.25rem' }}>
+                  Listen to the background score of our favorite moments.
+                </span>
+                
+                <div style={{ position: 'relative' }}>
+                  <div className="memory-row-scroll" style={{ scrollbarWidth: 'none', display: 'flex', gap: '1.25rem', overflowX: 'auto', padding: '10px 0' }}>
+                    {TRACKS.map((track) => {
+                      const isCurrent = currentTrack && currentTrack.id === track.id;
+                      const isPlayingThis = isCurrent && isPlayingAudio;
+                      return (
+                        <div 
+                          key={track.id}
+                          onClick={() => handleSelectTrack(track)}
+                          className={`track-card ${isCurrent ? 'active-track' : ''}`}
+                          style={{
+                            flex: '0 0 auto',
+                            width: '180px',
+                            backgroundColor: '#181818',
+                            borderRadius: '8px',
+                            border: isCurrent ? '1.5px solid var(--netflix-red)' : '1px solid #282828',
+                            overflow: 'hidden',
+                            cursor: 'pointer',
+                            transition: 'all 0.3s ease',
+                            position: 'relative'
+                          }}
+                        >
+                          <div style={{ position: 'relative', aspectRatio: '1/1', width: '100%', overflow: 'hidden' }}>
+                            <img 
+                              src={track.img} 
+                              alt="" 
+                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            />
+                            <div className="track-card-overlay" style={{
+                              position: 'absolute',
+                              inset: 0,
+                              background: 'rgba(0,0,0,0.6)',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              opacity: isCurrent ? 1 : 0,
+                              transition: 'opacity 0.2s ease'
+                            }}>
+                              <div style={{
+                                width: '40px',
+                                height: '40px',
+                                borderRadius: '50%',
+                                backgroundColor: 'var(--netflix-red)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                color: '#fff',
+                                boxShadow: '0 4px 10px rgba(0,0,0,0.4)'
+                              }}>
+                                {isPlayingThis ? (
+                                  <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/>
+                                  </svg>
+                                ) : (
+                                  <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16" style={{ marginLeft: '2px' }}>
+                                    <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                                  </svg>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div style={{ padding: '0.75rem' }}>
+                            <div style={{ fontWeight: 'bold', fontSize: '0.85rem', color: isCurrent ? 'var(--netflix-red)' : '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                              {track.title}
+                            </div>
+                            <div style={{ fontSize: '0.72rem', color: '#a3a3a3', marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                              {track.artist}
+                            </div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '6px' }}>
+                              <span style={{ fontSize: '0.68rem', color: 'var(--accent-amber)', background: 'rgba(245,158,11,0.1)', padding: '1px 5px', borderRadius: '3px' }}>
+                                {track.year}
+                              </span>
+                              <span style={{ fontSize: '0.7rem', color: '#888' }}>
+                                {formatTime(track.duration)}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
 
               {/* Featured Documentary Spotlight Section */}
               <div className="spotlight-section">
@@ -489,7 +797,10 @@ export default function App() {
             </div>
 
             {/* Cinematic Ending Section */}
-            <CinematicEnding memories={[...trendingNowItems, ...continueWatchingItems]} />
+            <CinematicEnding 
+              memories={[...trendingNowItems, ...continueWatchingItems]} 
+              onPlayThemeSong={playThemeSong}
+            />
           </>
         )}
 
@@ -606,6 +917,77 @@ export default function App() {
                 <p style={{ fontSize: '1rem', lineHeight: '1.5', color: '#e5e5e5' }}>
                   {selectedMemory.desc}
                 </p>
+
+                {/* Soundtrack Widget */}
+                {(() => {
+                  const linkedTrack = TRACKS.find(t => t.memoryId === selectedMemory.id);
+                  if (!linkedTrack) return null;
+                  const isCurrent = currentTrack && currentTrack.id === linkedTrack.id;
+                  const isPlayingThis = isCurrent && isPlayingAudio;
+                  
+                  return (
+                    <div style={{
+                      marginTop: '1.5rem',
+                      backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      borderRadius: '8px',
+                      padding: '0.85rem 1.2rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: '1rem'
+                    }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+                        <div style={{ fontSize: '1.5rem' }}>🎵</div>
+                        <div>
+                          <div style={{ fontSize: '0.75rem', color: '#a3a3a3', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                            MEMORY SOUNDTRACK
+                          </div>
+                          <div style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#fff' }}>
+                            {linkedTrack.title}
+                          </div>
+                          <div style={{ fontSize: '0.75rem', color: '#888' }}>
+                            {linkedTrack.artist} • {linkedTrack.album}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <button
+                        onClick={() => handleSelectTrack(linkedTrack)}
+                        style={{
+                          backgroundColor: isPlayingThis ? 'rgba(255, 255, 255, 0.15)' : 'var(--netflix-red)',
+                          border: 'none',
+                          color: '#fff',
+                          padding: '0.45rem 1.2rem',
+                          borderRadius: '4px',
+                          cursor: 'pointer',
+                          fontWeight: 'bold',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          transition: 'all 0.2s ease',
+                          fontSize: '0.85rem'
+                        }}
+                      >
+                        {isPlayingThis ? (
+                          <>
+                            <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+                              <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/>
+                            </svg>
+                            Pause
+                          </>
+                        ) : (
+                          <>
+                            <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+                              <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                            </svg>
+                            Play Song
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  );
+                })()}
 
                 {/* Micro Interaction: Reactions */}
                 <div style={{ marginTop: '1.5rem', borderTop: '1px solid #333', paddingTop: '1rem' }}>
@@ -775,11 +1157,122 @@ export default function App() {
         </div>
       )}
 
+      {/* Hidden YouTube Iframe for Audio-Only Streaming */}
+      {youtubeVideoId && (
+        <iframe
+          ref={youtubeRef}
+          key={youtubeVideoId}
+          src={`https://www.youtube.com/embed/${youtubeVideoId}?enablejsapi=1&autoplay=1&controls=0&rel=0`}
+          allow="autoplay"
+          style={{
+            width: '1px',
+            height: '1px',
+            position: 'fixed',
+            top: '-10px',
+            left: '-10px',
+            opacity: 0.01,
+            pointerEvents: 'none',
+            border: 'none'
+          }}
+          title="Audio Player"
+        />
+      )}
+
+      {/* Hidden HTML5 Audio Element for Local Playback */}
+      <audio
+        ref={audioRef}
+        onTimeUpdate={() => {
+          if (audioRef.current && playerType === 'local') {
+            setAudioTime(Math.floor(audioRef.current.currentTime));
+          }
+        }}
+        onLoadedMetadata={() => {
+          if (audioRef.current && playerType === 'local') {
+            setAudioDuration(Math.floor(audioRef.current.duration));
+          }
+        }}
+        onEnded={handleNextTrack}
+      />
+
+      {/* Glassmorphic Bottom Player Widget */}
+      {currentTrack && (
+        <div className="bottom-player">
+          <div className="bottom-player-inner">
+            {/* Track Info */}
+            <div className="bottom-player-info">
+              <img src={currentTrack.img} alt="" className="bottom-player-art" />
+              <div className="bottom-player-text">
+                <div className="bottom-player-title">{currentTrack.title}</div>
+                <div className="bottom-player-artist">{currentTrack.artist}</div>
+              </div>
+            </div>
+
+            {/* Center Controls */}
+            <div className="bottom-player-controls">
+              <button className="player-ctrl-btn" onClick={handlePrevTrack} title="Previous">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M3.5 2a.5.5 0 0 1 .5.5v5.21l7.15-4.94A.5.5 0 0 1 12 3.23V12.77a.5.5 0 0 1-.85.36L4 8.29V13.5a.5.5 0 0 1-1 0v-11a.5.5 0 0 1 .5-.5z"/></svg>
+              </button>
+              <button className="player-ctrl-btn play-btn" onClick={handlePlayPause} title={isPlayingAudio ? 'Pause' : 'Play'}>
+                {isPlayingAudio ? (
+                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/></svg>
+                ) : (
+                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/></svg>
+                )}
+              </button>
+              <button className="player-ctrl-btn" onClick={handleNextTrack} title="Next">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M12.5 2a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-1 0V8.29l-7.15 4.84A.5.5 0 0 1 4 12.77V3.23a.5.5 0 0 1 .85-.36L12 7.71V2.5a.5.5 0 0 1 .5-.5z"/></svg>
+              </button>
+              <button className="player-ctrl-btn" onClick={handleStopAudio} title="Stop">
+                <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><rect width="10" height="10" x="3" y="3" rx="1"/></svg>
+              </button>
+            </div>
+
+            {/* Progress & Volume */}
+            <div className="bottom-player-right">
+              <div className="bottom-player-progress">
+                <span className="player-time">{formatTime(audioTime)}</span>
+                <input
+                  type="range"
+                  min="0"
+                  max={currentTrack.duration || 300}
+                  value={audioTime}
+                  onChange={(e) => handleSeek(Number(e.target.value))}
+                  className="player-seek-bar"
+                />
+                <span className="player-time">{formatTime(currentTrack.duration || 0)}</span>
+              </div>
+              <div className="bottom-player-volume">
+                <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z"/></svg>
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.05"
+                  value={audioVolume}
+                  onChange={(e) => handleVolumeChange(Number(e.target.value))}
+                  className="player-volume-bar"
+                />
+              </div>
+            </div>
+
+            {/* Animated Equalizer */}
+            {isPlayingAudio && (
+              <div className="player-equalizer">
+                <span className="eq-bar"></span>
+                <span className="eq-bar"></span>
+                <span className="eq-bar"></span>
+                <span className="eq-bar"></span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Cinematic Footer */}
       <footer style={{
         backgroundColor: '#0c0c0c',
         borderTop: '1px solid #222',
-        padding: '1.5rem 4% 1.5rem',
+        padding: currentTrack ? '1.5rem 4% 6rem' : '1.5rem 4% 1.5rem',
         color: 'var(--text-grey)',
         fontSize: '0.8rem',
         zIndex: 10
